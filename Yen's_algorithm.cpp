@@ -1,4 +1,4 @@
-﻿// Yen's_algorithm.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
+// Yen's_algorithm.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
 //
 
 #include <iostream>
@@ -6,6 +6,8 @@
 #include <set>
 #include <climits>
 #include <algorithm>
+#include <time.h>
+#include <random>
 using namespace std;
 
 typedef long long ll;
@@ -120,19 +122,41 @@ int32_t main()
     cin >> n >> m >> k;
     G.resize(n);
     
+
     /*for (int i = 0; i < m; i++) {
         int a, b, w;
         cin >> a >> b >> w;
         G[--a].push_back({ --b, w });
     }*/
+    
     for (int i = 0; i < n; i++) {
-        for (int j = i+1; j < n; j++) {
-            G[i].push_back({ j, i+j+2 });
+        for (int j = i + 1; j < n; j++) {
+            G[i].push_back({ j, i + j + 2 });
         }
     }
+    //тест-цепочка с разветлением
+    /*for (int i = 0; i < n - k; i++) {
+        G[i].push_back({ i + 1, 1 });
+    }
+    for (int i = n-k-1; i < n-1; i++) {
+        G[n - k - 1].push_back({ i, 1 });
+        G[i].push_back({ n - 1, 1 });
+    }*/
+
+    //рандомный вес ребер
+    /*for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            G[i].push_back({ j, 1 + rand() % (int)1e9 });
+        }
+    }*/
+
+    clock_t start = clock();
 
     fr = 0;
     to = n-1;
     yen_algorithm(fr, to, k);
 
+    clock_t end = clock();
+    double seconds = (double)(end - start) / CLOCKS_PER_SEC;
+    cout << "time: " << seconds<<"s" << endl;
 }
